@@ -1,10 +1,10 @@
 import express from 'express'
 import morgan from 'morgan'
 import mongoose from 'mongoose'
-import userRoutes from './src/users/routes/v1/user.route'
-import productRoutes from './src/products/routes/v1/product.route'
-import orderRoutes from './src/orders/routes/v1/order.route'
-import priceRoutes from './src/prices/routes/v1/price.route'
+import userRoutes from './users/routes/v1/user.route';
+import productRoutes from './products/routes/v1/product.route'
+import orderRoutes from './orders/routes/v1/order.route'
+import priceRoutes from './prices/routes/v1/price.route'
 
 import cors from 'cors'
 
@@ -22,11 +22,11 @@ mongoose.connection.once('open',function(){
   console.log('error is:',error)
 })
 
-app.use('/uploads',express.static('uploads'));
+
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(cors());
-
+app.use('/uploads',express.static('uploads'));
 
 app.use('/price',priceRoutes)
 app.use('/orders',orderRoutes)
@@ -58,4 +58,4 @@ app.listen(port, () =>{
 
 
 
-
+module.exports = app

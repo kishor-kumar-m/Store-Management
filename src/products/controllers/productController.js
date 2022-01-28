@@ -57,7 +57,9 @@ exports.products_get_id = async (req,res,next) =>{
     .then(doc => {
         console.log(doc);
         if (doc){
-            res.status(200).json(doc);
+            res.status(200).json({
+                data:doc 
+            });
         }else{
             res.status(404).json({message: 'No Matching Id '})
         }

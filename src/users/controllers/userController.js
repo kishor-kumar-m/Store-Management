@@ -89,7 +89,26 @@ exports.getOrder = async(req,res,next) =>{
     .populate('userId')
     
     .then(docs =>  {
-        res.status(200).json(docs);
+        if (docs.length !=0){
+        res.status(200).json({
+
+            count: docs.length,
+            
+            orders: docs.map(doc => {
+                return {
+                  _id: doc._id,
+                  productId: doc.productId,
+                  userId : doc.userId._id,
+                  userEmail : doc.userId.email,
+                  quantity : doc.quantity,
+                  orderedAt : doc.orderedAt
+                }
+            })
+        });}
+        else{
+
+            res.status(200).json({message: 'No Matching Data found on the given date '})
+        }
     })
     .catch(err =>{
         res.status(500).json({
