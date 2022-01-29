@@ -11,7 +11,7 @@ router.post('/signup',userController.signUp);
 
 router.post('/login',userController.login);
 
-router.get('/get-order/:userId',userController.getOrder);
+
 
 
 

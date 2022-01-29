@@ -6,7 +6,7 @@ const router =  express.Router();
 
 
 
-router.get('/get-price',priceController.getPrice);
+router.get('/get-prices',priceController.getPrice);
 router.post('/create-price',priceController.createPrice)
 router.patch('/update-price/:priceId',priceController.updatePrice)
 router.delete('/delete-price/:priceId',priceController.deletePrice)

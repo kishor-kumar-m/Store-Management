@@ -24,8 +24,8 @@ router.post('/create-product',upload.single('productImage'),productController.pr
 
 router.get('/get-product/:productId',productController.products_get_id);
 
-router.delete('/delete/:productId',productController.product_delete);
+router.delete('/delete-product/:productId',productController.product_delete);
 
-router.patch('/update/:productId',productController.product_update);
+router.patch('/update-product/:productId',productController.product_update);
 
 module.exports = router; 

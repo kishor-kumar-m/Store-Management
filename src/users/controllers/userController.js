@@ -1,7 +1,10 @@
 import User from '../models/user.model'
 import mongoose from 'mongoose'
-import Order from '../../orders/models/order.model'
+
 import bcrypt from 'bcrypt';
+
+
+/**POST Method to create a new User */    
 
 exports.signUp = (req,res,next)=>{
     bcrypt.hash(req.body.password,10,function(error,hash){
@@ -38,7 +41,7 @@ exports.signUp = (req,res,next)=>{
 });
 }
 
-
+/**POST Method to login a existing user */    
 
 exports.login = async (req,res,next) => {
     await User.find({email : req.body.email})
@@ -77,42 +80,3 @@ exports.login = async (req,res,next) => {
 }
 
 
-exports.getOrder = async(req,res,next) =>{
-    
-    
-    await Order.find({userId:req.params.userId,
-            orderedAt: {
-                    $gte:  new Date(req.body.fromdate) ,
-                    $lt: new Date(req.body.todate)
-                }  
-            })              
-    .populate('userId')
-    
-    .then(docs =>  {
-        if (docs.length !=0){
-        res.status(200).json({
-
-            count: docs.length,
-            
-            orders: docs.map(doc => {
-                return {
-                  _id: doc._id,
-                  productId: doc.productId,
-                  userId : doc.userId._id,
-                  userEmail : doc.userId.email,
-                  quantity : doc.quantity,
-                  orderedAt : doc.orderedAt
-                }
-            })
-        });}
-        else{
-
-            res.status(200).json({message: 'No Matching Data found on the given date '})
-        }
-    })
-    .catch(err =>{
-        res.status(500).json({
-            error: err
-        })
-    })
-    }

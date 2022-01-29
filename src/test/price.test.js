@@ -7,27 +7,33 @@
 
 
 // describe('STORES API', ()=>{
-//     describe("POST/products/create-product", ()=>{
+//     describe("POST/price/create-price", ()=>{
 //         it("It should create the products", (done)=>{
+//             const Price = {
+//                 productId : "61f4d8f2e5144a13fb85303b",
+//                 lastPrice : "25"
+//             }
 //             chai.request(server)
-//             .post("/products/create-product")
-//             .field('Content-Type', 'multipart/form-data')
-//             .field('name', 'green-apple')
-//             .field('description', 'it is a fruit')
-//             .attach('productImage', '../../Pictures/emoji.png')
+//             .post("/price/create-price")
+//             .send(Price)        
 //             .end ((err, response)=>{
 //                 response.should.have.status(201)
-//                 response.body.should.be.a('object')            
+//                 response.body.should.be.a('object')     
+//                 .and.has.property('message').equal("Price created") 
+//                 response.body.should.have.property('data')  
+//                     .which.is.an('object')
+//                     .and.has.property('productId').equal("61f4d8f2e5144a13fb85303b") 
+
 //                 done()
 //             })
 //         })
 //     })
 
 
-//     describe("GET/products/", ()=>{
-//         it("It should get all the products", (done)=>{
+//     describe("GET/prices/", ()=>{
+//         it("It should get all the prices", (done)=>{
 //             chai.request(server)
-//             .get("/products/get-products")
+//             .get("/price/get-prices")
 //             .end ((err, response)=>{
 //                 response.should.have.status(200)
 //                 response.body.should.be.a('object')                 
@@ -35,7 +41,7 @@
 //                     .which.is.an('object')
 //                     .and.has.property('data')            
 //                     .which.is.an('array')    
-//                     .with.lengthOf(3);
+//                     .with.lengthOf(5);
                               
 //                 done()
 //             })
@@ -43,40 +49,39 @@
 //         })
 //     })
 
-//     describe("GET/product/productId",()=>{
+//     describe("GET/price/priceId",()=>{
 //         it("It should get a product by its Id",(done)=>{
-//             const productId = "61f4d5b195a28e2842b75c13"
+//             const priceId = "61f383454d9cc0372a153ff6"
 //             chai.request(server)
-//             .get("/products/get-product/"+productId)
+//             .get("/price/get-price/"+priceId)
 //             .end ((err, response)=>{
 //             response.should.have.status(200)
 //             response.body.should.be.a('object')
 //             response.body.should.have.property('data')
 //                     .which.is.an('object')
-//                     .and.has.property('_id').equal("61f4d5b195a28e2842b75c13")
+//                     .and.has.property('_id').equal("61f383454d9cc0372a153ff6")
 //             response.body.should.have.property('data')
 //                     .which.is.an('object')        
-//                     .and.has.property('name').equal("apple")
+//                     .and.has.property('productId').equal("61f37d13d86eb5127642709d")
 //             response.body.should.have.property('data')
 //                     .which.is.an('object')        
-//                     .and.has.property('description').equal("fruit")             
-//             response.body.should.have.property('data')
-//                     .which.is.an('object')        
-//                     .and.has.property('productImage').equal("uploads\\2022-01-29T05-50-41.328Zimg.png")      
+//                     .and.has.property('lastPrice')
+//                     .which.is.an('number')             
+                
 //             done()
 //             })
 //         })
 //     })
 
-//     describe("PATCH/product",()=>{
+//     describe("PATCH/price",()=>{
 //         it("It should UPDATE the  product ", (done)=>{
-//             const productId = "61f4bd4487322e01cc17933c"
-//             const product = {
-//                 "name": "Grape"
+//             const priceId = "61f383454d9cc0372a153ff6"
+//             const price = {
+//                 "lastPrice": "15"
 //              }
 //             chai.request(server)
-//             .patch("/products/update-product/"+productId)
-//             .send(product)
+//             .patch("/price/update-price/"+priceId)
+//             .send("price")
 //             .end ((err, response)=>{
 //                 response.should.have.status(200)
 //                 response.body.should.be.a('object')
@@ -86,15 +91,15 @@
 //         }) 
 //     })
 
-//     describe("DELETE/product",()=>{
+//     describe("DELETE/product/priceId",()=>{
 //         it("It should DELETE the product ", (done)=>{
-//             const productId = "61f4d8f6e5144a13fb85303d"
+//             const priceId = "61f4e24c448a008ccd03bb64"
 //             chai.request(server)
-//             .delete("/products/delete-product/"+productId)
+//             .delete("/price/delete-price/"+priceId)
 //             .end ((err, response)=>{
 //                 response.should.have.status(200)
 //                 response.body.should.be.an('object')
-//                     .and.has.property('message').equal("Product deleted")        
+//                     .and.has.property('message').equal("Price deleted")        
 //                 done()
 //             })
 //         })

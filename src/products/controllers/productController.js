@@ -1,6 +1,7 @@
 import Product from '../models/product.model'
 import mongoose from 'mongoose'
 
+/** GET Method to get all the products*/
  
 exports.products_get= async(req,res,next) =>{
     await Product.find()
@@ -9,10 +10,12 @@ exports.products_get= async(req,res,next) =>{
     .then(docs => {
         const response ={
             count: docs.length,
-            products: docs
+            data: docs
 
         };
-    res.status(200).json(response);   
+    res.status(200).json({
+        result:response
+    });   
     })
     
     .catch(err =>{
@@ -23,6 +26,7 @@ exports.products_get= async(req,res,next) =>{
     
 };
 
+/**POST Method to create a new Product */    
 
 exports.product_post =async (req,res,next) =>{
     console.log(req.file);
@@ -37,7 +41,7 @@ exports.product_post =async (req,res,next) =>{
     .then(result =>{
         console.log(result);
         res.status(201).json({
-            message:'Handling POST Method',
+            message:'Product Created',
             createdProduct: result
         });        
     })   
@@ -49,6 +53,8 @@ exports.product_post =async (req,res,next) =>{
 })
       
 }
+
+/** GET Method to get the specific product by productId*/
 
 exports.products_get_id = async (req,res,next) =>{
     const id= req.params.productId;
@@ -71,13 +77,18 @@ exports.products_get_id = async (req,res,next) =>{
     });
 }
 
+/**DELETE Method to delete the specific product by productId */
+
 exports.product_delete = async(req,res,next) =>{
     const id = req.params.productId;
-    await Product.remove({
+    await Product.deleteOne({
         _id : id
     }).exec()
     .then(result => {
-        res.status(200).json(result);
+        res.status(200).json({
+            data:result, 
+            message : "Product deleted"
+        });
     })
     .catch(error => {
         res.status(500).json({
@@ -87,6 +98,8 @@ exports.product_delete = async(req,res,next) =>{
 
 }
 
+/**PATCH Method to update the specific product by productId */
+
 exports.product_update = async(req,res,next) =>{
     const id = req.params.productId
     const updates = req.body
@@ -95,7 +108,9 @@ exports.product_update = async(req,res,next) =>{
     .exec()
     .then(result => {
         console.log(result);
-        res.status(200).json(result);  
+        res.status(200).json({
+            data:result
+        });  
     })
     .catch(err => {
         console.log(err);
