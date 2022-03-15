@@ -1,6 +1,6 @@
 import User from '../models/user.model'
 import mongoose from 'mongoose'
-
+import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt';
 
 
@@ -44,30 +44,34 @@ exports.signUp = (req,res,next)=>{
 /**POST Method to login a existing user */    
 
 exports.login = async (req,res,next) => {
-    await User.find({email : req.body.email})
+    await User.findOne({email : req.body.email})
     .exec()
-    .then(user => {
-        if(user.length <1){
-            return res.status(401).json({
-                message : 'Auth failed'
-
-            });
-            
-        }
-        bcrypt.compare(req.body.password,user[0].password,(err,result) =>{
-            
+    .then(user => {      
+        if(user){
+        bcrypt.compare(req.body.password,user.password,(err,result) =>{            
             if(result){
+                const payload ={
+                    username : user.email,
+                    id:user._id
+                }               
+                const token = jwt.sign(payload,"secret",{expiresIn:"1d"})
                 return res.status(200).json({
                     message : "Auth Successful",
-                    
+                    token : "Bearer " + token
                 })
-            }
+        }
             res.status(401).json({
                 message :'Invalid Password '
             })
 
         });   
-    })  
+    }
+    else{
+        res.status(404).json({
+            message :'No user found'
+        })
+    }
+}) 
     .catch(err => {
         console.log(err);
         res.status(500).json({
@@ -75,8 +79,6 @@ exports.login = async (req,res,next) => {
         })
 
     });
-
-
 }
 
 

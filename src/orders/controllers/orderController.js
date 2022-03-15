@@ -116,11 +116,12 @@ exports.getOrderById = async (req,res,next) =>{
 exports.getUserOrder = async(req,res,next) =>{
     
     
+    
     await Order.find({userId:req.params.userId,
             orderedAt: {
                     $gte:  new Date(req.body.fromdate) ,
                     $lt: new Date(req.body.todate)
-                }  
+                }           
             })              
     .populate('userId')
     
