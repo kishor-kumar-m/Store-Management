@@ -1,9 +1,11 @@
 import Order from '../models/order.model'
 import mongoose from 'mongoose'
-
+require('../../config/passport.js');
+import passport from 'passport';
 
 /** GET Method to get all the orders*/
 exports.getOrder = async(req,res,next) =>{
+   
     await Order.find()
     
     .then(docs =>  {
@@ -25,11 +27,13 @@ exports.getOrder = async(req,res,next) =>{
 
 /**POST Method to create a new Order */    
 exports.createOrder = async(req,res,next) =>{
+    const userId = req.user._id
+      console.log(data);
     const order = await new Order({
         _id: mongoose.Types.ObjectId(),
-        quantity: req.body.quantity,
+        quantity: req.body.quantity ,
         productId: req.body.productId,
-        userId : req.body.userId
+        userId : userId
         
     });
     order
@@ -45,7 +49,7 @@ exports.createOrder = async(req,res,next) =>{
     .catch(err =>{
         console.log(err);
         res.status(500).json({
-            error:err
+            error:err.message
         });
     })
 }    

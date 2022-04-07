@@ -31,8 +31,15 @@ exports.signUp = (req,res,next)=>{
         })
         .catch(err=>{
             console.log(err);
+
+            if(err.name == 'MongoServerError'){
+                return res.status(400).json({
+                    error : err.message
+                })
+
+            }
             res.status(500).json({
-                error : err
+                error : err.message
             })
          
         

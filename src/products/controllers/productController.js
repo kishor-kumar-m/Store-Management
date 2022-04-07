@@ -73,7 +73,7 @@ exports.products_get_id = async (req,res,next) =>{
     })
     .catch(err => {
         console.log(err);
-        res.status(500).json({error:err});
+        res.status(500).json({error:err.message});
     });
 }
 
@@ -92,7 +92,7 @@ exports.product_delete = async(req,res,next) =>{
     })
     .catch(error => {
         res.status(500).json({
-            error : error
+            error : error.message
         })
     })
 
