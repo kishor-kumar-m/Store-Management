@@ -1,0 +1,15 @@
+version: "3"
+services:
+  app:
+    container_name: node
+    restart: always
+    build: .   
+    ports:
+      - "5000:3000"
+    links:
+      - mongo
+  mongo:
+    container_name: mongo-db
+    image: mongo  
+    ports:
+      - "27018:27017"

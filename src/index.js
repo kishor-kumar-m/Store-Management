@@ -14,7 +14,7 @@ app.use(morgan("dev"));
 
 const port = process.env.PORT || 3000;
 
-mongoose.connect("mongodb://localhost:27017/user-manage");
+mongoose.connect("mongodb://mongo-db:27017/user-manage");
 mongoose.connection
   .once("open", function () {
     console.log("DB connected");

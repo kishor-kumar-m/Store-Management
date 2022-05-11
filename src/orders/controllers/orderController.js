@@ -1,7 +1,6 @@
 import Order from '../models/order.model'
 import mongoose from 'mongoose'
 require('../../config/passport.js');
-import passport from 'passport';
 
 /** GET Method to get all the orders*/
 exports.getOrder = async(req,res,next) =>{
