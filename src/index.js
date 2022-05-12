@@ -6,7 +6,7 @@ import productRoutes from "./products/routes/v1/product.route";
 import orderRoutes from "./orders/routes/v1/order.route";
 import priceRoutes from "./prices/routes/v1/price.route";
 import cors from "cors";
-require('./config/passport')
+require("./config/passport");
 import passport from "passport";
 
 const app = express();
@@ -27,20 +27,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 app.use("/uploads", express.static("uploads"));
-app.use(passport.initialize())
+app.use(passport.initialize());
 
 app.use("/price", priceRoutes);
 app.use("/orders", orderRoutes);
 app.use("/products", productRoutes);
 app.use("/user", userRoutes);
-
-
+app.get("/", (req, res) => {
+  res.json({
+    status: 1,
+    message: "server is up and running...",
+    data: {},
+  });
+});
 
 app.use((req, res, next) => {
   const error = new Error("not found");
   error.status = 404;
   next(error);
 });
+
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
